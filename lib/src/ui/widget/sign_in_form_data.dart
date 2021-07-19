@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_diabetes/src/ui/forgot_password.dart';
+import 'package:my_diabetes/src/ui/register.dart';
 import 'package:my_diabetes/src/ui/widget/default_button.dart';
 import 'package:my_diabetes/src/ui/widget/default_text_field.dart';
 
@@ -88,36 +90,6 @@ class SignInFormState extends State<SignInForm> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container(
-  //       height: double.infinity,
-  //       width: double.infinity,
-  //       child: LayoutBuilder(builder:
-  //           (BuildContext context, BoxConstraints viewportConstraints) {
-  //         return SingleChildScrollView(
-  //             child: ConstrainedBox(
-  //                 constraints: BoxConstraints(
-  //                   minHeight: viewportConstraints.maxHeight,
-  //                 ),
-  //                 child: Column(
-  //                   mainAxisAlignment: MainAxisAlignment.start,
-  //                   children: <Widget>[
-  //                     emailField(),
-  //                     Container(margin: EdgeInsets.only(top: 5.0, bottom: 5.0)),
-  //                     passwordField(),
-  //                     Container(
-  //                         margin: EdgeInsets.only(top: 20.0, bottom: 20.0)),
-  //                     submitButton(),
-  //                     Container(
-  //                         margin: EdgeInsets.only(top: 15.0, bottom: 50.0)),
-  //                     Expanded(flex: 1, child: forgotPasswordButton()),
-  //                     Expanded(flex: 1, child: registerNavigationButton()),
-  //                   ],
-  //                 )));
-  //       }));
-  // }
-
   Widget passwordField() {
     return StreamBuilder(
         stream: _bloc.password,
@@ -159,13 +131,21 @@ class SignInFormState extends State<SignInForm> {
 
   Widget forgotPasswordButton() {
     return MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
+              ForgotPasswordScreen()
+          ));
+        },
         child: Text("Forgot password?", style: TextStyle(color: Colors.black)));
   }
 
   Widget registerNavigationButton() {
     return MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
+              RegisterScreen()
+          ));
+        },
         child: Text("Don't have an account? Register",
             style: TextStyle(color: Colors.red)));
   }
@@ -173,22 +153,7 @@ class SignInFormState extends State<SignInForm> {
   void authenticateUser() {
     _bloc.showProgressBar(true);
     _bloc.submit().then((value) {
-      if (value == 0) {
-        //New User
-        _bloc.registerUser().then((value) {
-          // Navigator.pushReplacement(
-          //context,
-          // MaterialPageRoute(
-          //   builder: (context) => GoalsList(_bloc.emailAddress)));
-        });
-      } else {
         _bloc.showProgressBar(false);
-        //Already registered
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => GoalsList(_bloc.emailAddress)));
-      }
     });
   }
 

@@ -16,10 +16,16 @@ class FirestoreProvider {
     }
   }
 
-  Future<void> registerUser(String email, String password) async {
+  Future<void> registerUser(String firstName, String lastName,String phone,String email, String password) async {
     return _firestore
         .collection("users")
         .document(email)
-        .setData({'email': email, 'password': password});
+        .setData(
+        {'email': email,
+          'password': password,
+          'firstName': firstName,
+          'lastName': lastName,
+          'phone': phone,
+        });
   }
 }
