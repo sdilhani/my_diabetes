@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diabetes/src/ui/forgot_password.dart';
+import 'package:my_diabetes/src/ui/homeScreen.dart';
 import 'package:my_diabetes/src/ui/register.dart';
 import 'package:my_diabetes/src/ui/widget/default_button.dart';
 import 'package:my_diabetes/src/ui/widget/default_text_field.dart';
@@ -164,6 +165,11 @@ class SignInFormState extends State<SignInForm> {
     _bloc.submit().then((value) {
         print("value -------> $value");
         _bloc.showProgressBar(false);
+        if(value == 1){
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) =>
+              HomeScreen()
+          ));
+        }
     });
   }
 

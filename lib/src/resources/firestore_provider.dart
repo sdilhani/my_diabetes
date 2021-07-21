@@ -9,6 +9,7 @@ class FirestoreProvider {
         .where("email", isEqualTo: email)
         .getDocuments();
     final List<DocumentSnapshot> docs = result.documents;
+
     if (docs.length == 0) {
       print("len 0");
       return 0;
