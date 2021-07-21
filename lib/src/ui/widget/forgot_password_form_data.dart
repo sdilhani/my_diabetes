@@ -72,7 +72,7 @@ class ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   Widget emailField() {
     return StreamBuilder(builder: (context, snapshot) {
-      return DefaultTextField("Enter your Email", (_) {}, false);
+      return DefaultTextField("Enter your Email", (_) {}, false, TextInputType.emailAddress);
     });
   }
 

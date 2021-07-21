@@ -93,27 +93,35 @@ class SignInFormState extends State<SignInForm> {
   Widget passwordField() {
     return StreamBuilder(
         stream: _bloc.password,
+        initialData: null,
         builder: (context, AsyncSnapshot<String> snapshot) {
           return DefaultTextField(
-              "Enter the Password", _bloc.changePassword, true);
+              "Enter the Password", _bloc.changePassword, true, TextInputType.text);
         });
   }
 
   Widget emailField() {
     return StreamBuilder(
         stream: _bloc.email,
+        initialData: null,
         builder: (context, snapshot) {
-          return DefaultTextField("Enter the Email", _bloc.changeEmail, false);
+          return DefaultTextField("Enter the Email", _bloc.changeEmail, false, TextInputType.emailAddress);
         });
   }
 
   Widget submitButton() {
     return StreamBuilder(
         stream: _bloc.signInStatus,
+        initialData: null,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (!snapshot.hasData || snapshot.hasError) {
             return button();
           } else {
+            print(snapshot.data);
+            if(!snapshot.data) {
+              //WidgetsBinding.instance.addPostFrameCallback((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please check credentials"))));
+              return button();
+            }
             return CircularProgressIndicator();
           }
         });
@@ -121,10 +129,11 @@ class SignInFormState extends State<SignInForm> {
 
   Widget button() {
     return DefaultButton("Login", () {
-      if (_bloc.validateFields()) {
+      String result = _bloc.validateFields();
+      if (result == "") {
         authenticateUser();
       } else {
-        showErrorMessage();
+        showErrorMessage(result);
       }
     });
   }
@@ -153,13 +162,12 @@ class SignInFormState extends State<SignInForm> {
   void authenticateUser() {
     _bloc.showProgressBar(true);
     _bloc.submit().then((value) {
+        print("value -------> $value");
         _bloc.showProgressBar(false);
     });
   }
 
-  void showErrorMessage() {
-    final snackbar =
-        SnackBar(content: Text("Error"), duration: new Duration(seconds: 2));
-    Scaffold.of(context).showSnackBar(snackbar);
+  void showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 }

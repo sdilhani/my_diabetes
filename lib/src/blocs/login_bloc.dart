@@ -15,7 +15,7 @@ class LoginBloc {
 
   Observable<bool> get signInStatus => _isSignedIn.stream;
 
-  String get emailAddress => _email.value;
+//  String get emailAddress => _email.value;
 
   // Change data
   Function(String) get changeEmail => _email.sink.add;
@@ -26,7 +26,7 @@ class LoginBloc {
 
   final _validateEmail =
   StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
-    if (email.contains('@')) {
+    if (email.contains('@') && email.contains('.')) {
       sink.add(email);
     } else {
       sink.addError("Invalid Email");
@@ -55,16 +55,19 @@ class LoginBloc {
     _isSignedIn.close();
   }
 
-  bool validateFields() {
-    if (_email.value != null &&
-        _email.value.isNotEmpty &&
-        _password.value != null &&
-        _password.value.isNotEmpty &&
-        _email.value.contains('@') &&
-        _password.value.length > 3) {
-      return true;
+  String validateFields() {
+    if (_email.value == null ||
+        _email.value.isEmpty ||
+        !_email.value.contains('@') ||
+        !_email.value.contains('.')){
+      return "Invalid Email";
+    } else if(
+        _password.value == null ||
+        _password.value.isEmpty ||
+        _password.value.length < 3) {
+      return "Invalid Password";
     } else {
-      return false;
+      return "";
     }
   }
 }

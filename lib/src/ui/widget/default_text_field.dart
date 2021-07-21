@@ -6,8 +6,9 @@ class DefaultTextField extends StatelessWidget {
   final String hint;
   final Function onChange;
   final bool isSecure;
+  final TextInputType type;
 
-  DefaultTextField(this.hint, this.onChange, this.isSecure);
+  DefaultTextField(this.hint, this.onChange, this.isSecure, this.type);
 
   TextField build(BuildContext context) {
     return TextField(
@@ -22,6 +23,7 @@ class DefaultTextField extends StatelessWidget {
       ),
       onChanged: onChange,
       obscureText: isSecure,
+      keyboardType: type,
     );
   }
 }

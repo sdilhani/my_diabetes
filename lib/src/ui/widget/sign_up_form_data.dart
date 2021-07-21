@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_diabetes/src/ui/widget/default_button.dart';
 import 'package:my_diabetes/src/ui/widget/default_text_field.dart';
 
@@ -58,10 +59,8 @@ class SignUpFormState extends State<SignUpForm> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
-                                )
-                            )
-                        ),
-                            Container(
+                                ))),
+                        Container(
                             margin: EdgeInsets.only(top: 30.0, bottom: 5.0),
                             child: Align(
                                 alignment: Alignment.centerLeft,
@@ -71,10 +70,8 @@ class SignUpFormState extends State<SignUpForm> {
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
-                                )
-                            )
-                        ),
-                            Container(
+                                ))),
+                        Container(
                             margin: EdgeInsets.only(bottom: 5.0),
                             child: Align(
                                 alignment: Alignment.centerLeft,
@@ -84,9 +81,7 @@ class SignUpFormState extends State<SignUpForm> {
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal),
-                                )
-                            )
-                        ),
+                                ))),
                         Container(
                             margin: EdgeInsets.only(top: 20.0, bottom: 5.0)),
                         firstNameField(),
@@ -124,51 +119,67 @@ class SignUpFormState extends State<SignUpForm> {
     return StreamBuilder(
         stream: _bloc.password,
         builder: (context, AsyncSnapshot<String> snapshot) {
-      return DefaultTextField("Enter the Password",  _bloc.changePassword, true);
-    });
+          return DefaultTextField(
+              "Enter the Password", _bloc.changePassword, true, TextInputType.text);
+        });
   }
 
   Widget reEnterPasswordField() {
     return StreamBuilder(
         stream: _bloc.rePassword,
         builder: (context, AsyncSnapshot<String> snapshot) {
-      return DefaultTextField("Re-Enter the Password", _bloc.changeRePassword, true);
-    });
+          return DefaultTextField(
+              "Re-Enter the Password", _bloc.changeRePassword, true, TextInputType.text);
+        });
   }
 
   Widget emailField() {
     return StreamBuilder(
         stream: _bloc.email,
-        builder: (context, snapshot) {
-      return DefaultTextField("Enter the Email", _bloc.changeEmail, false);
-    });
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          return DefaultTextField("Enter the Email", _bloc.changeEmail, false, TextInputType.emailAddress);
+        });
   }
 
   Widget firstNameField() {
     return StreamBuilder(
-        builder: (context, snapshot) {
-      return DefaultTextField("Enter the First Name", (_) {/*_bloc.firstName.toString();*/}, false);
-    });
+        stream: _bloc.firstName,
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          return DefaultTextField("Enter the First Name", _bloc.changeFirstName, false, TextInputType.name);
+        });
   }
 
   Widget lastNameField() {
-    return StreamBuilder(builder: (context, snapshot) {
-      return DefaultTextField("Enter the Last Name", (_) {/*_bloc.lastName.toString();*/}, false);
-    });
+    return StreamBuilder(
+        stream: _bloc.lastName,
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          return DefaultTextField("Enter the Last Name", _bloc.changeLastName, false, TextInputType.name);
+        });
   }
 
   Widget phoneNumberField() {
-    return StreamBuilder(builder: (context, snapshot) {
-      return DefaultTextField("Enter the Phone Number", (_) {/*_bloc.phoneNumber.toString();*/}, false);
-    });
+    return StreamBuilder(
+        stream: _bloc.phoneNumber,
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          return DefaultTextField("Enter the Phone Number", _bloc.changePhone, false, TextInputType.phone);
+        });
   }
 
   Widget submitButton() {
     return StreamBuilder(
+        stream: _bloc.processStatus,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
       if (!snapshot.hasData || snapshot.hasError) {
         return button();
       } else {
+        print(snapshot.data);
+        if(!snapshot.data) {
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          } else {
+            SystemNavigator.pop();
+          }
+        }
         return CircularProgressIndicator();
       }
     });
@@ -176,17 +187,19 @@ class SignUpFormState extends State<SignUpForm> {
 
   Widget button() {
     return DefaultButton("Submit", () {
-      if (_bloc.validateFields()) {
-        _bloc.registerUser();
+      String result = _bloc.validateFields();
+      if (result == "") {
+        _bloc.showProgressBar(true);
+        _bloc.registerUser().then((value) => {
+          _bloc.showProgressBar(false)
+        });
       } else {
-        showErrorMessage();
+        showErrorMessage(result);
       }
     });
   }
 
-  void showErrorMessage() {
-    final snackbar =
-        SnackBar(content: Text("Invalid Details"), duration: new Duration(seconds: 2));
-    Scaffold.of(context).showSnackBar(snackbar);
+  void showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 }
