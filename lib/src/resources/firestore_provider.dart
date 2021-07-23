@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_diabetes/src/models/models.dart';
 
 class FirestoreProvider {
   Firestore _firestore = Firestore.instance;
@@ -30,5 +31,24 @@ class FirestoreProvider {
           'lastName': lastName,
           'phone': phone,
         });
+  }
+
+  Future<List<ArticleModel>> getAllArticles() async {
+    final QuerySnapshot result = await _firestore
+        .collection("articles")
+        .getDocuments();
+    final List<ArticleModel>  articles  = [];
+
+    result.documents.forEach((element) {
+        ArticleModel articleModel = ArticleModel(
+            element.documentID,
+            element.data.containsKey("name") ? element["name"] : "",
+            element.data.containsKey("image") ? element["image"] : "",
+            element.data.containsKey("url") ? element["url"] : "");
+
+        articles.add(articleModel);
+    });
+
+    return articles;
   }
 }
