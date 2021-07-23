@@ -42,9 +42,10 @@ class DoctorModel extends UserModel{
 }
 
 class ArticleModel {
+  final String id;
   final String name;
   final String image;
   final String url;
 
-  ArticleModel(this.name, this.image, this.url);
+  ArticleModel(this.id, this.name, this.image, this.url);
 }

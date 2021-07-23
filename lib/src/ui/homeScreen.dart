@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diabetes/src/blocs/article_bloc_provider.dart';
+import 'package:my_diabetes/src/ui/widget/articles_list.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -23,9 +25,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      PlaceholderWidget(Colors.white),
+      ArticleBlocProvider( child: ArticlesListScreen()),
       PlaceholderWidget(Colors.deepOrange),
-      PlaceholderWidget(Colors.green)
+      PlaceholderWidget(Colors.green),
+      PlaceholderWidget(Colors.yellow)
     ];
 
     final List<String> _titles = [
@@ -48,21 +51,21 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.menu_book_sharp),
-              backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
+              backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
             label: 'Home'
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
+            backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
             icon: new Icon(Icons.person_outline),
             label: 'Messages',
           ),
           BottomNavigationBarItem(
-              backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
+              backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
               icon: Icon(Icons.food_bank_outlined),
               label: 'Profile'
           ),
           BottomNavigationBarItem(
-              backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
+              backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
               icon: Icon(Icons.settings),
               label: 'Profile'
           )
