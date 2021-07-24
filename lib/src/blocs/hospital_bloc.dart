@@ -4,7 +4,7 @@ import 'package:my_diabetes/src/models/models.dart';
 import '../resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class DoctorBloc {
+class HospitalBloc {
   final _repository = Repository();
   final _isLoading = BehaviorSubject<bool>();
 
@@ -12,12 +12,8 @@ class DoctorBloc {
 
   Function(bool) get showProgressBar => _isLoading.sink.add;
 
-  Stream<List<DoctorModel>> getAllDoctors() {
-     return _repository.getAllDoctors();
-  }
-
-  Stream<List<DoctorModel>> getAllConsultants() {
-     return _repository.getAllConsultants();
+  Stream<List<HospitalModel>> getHospitalsByIds(List<String> ids) {
+     return _repository.getHospitalsByIds(ids);
   }
 
   void dispose() async {

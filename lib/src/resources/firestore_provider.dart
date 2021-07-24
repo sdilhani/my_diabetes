@@ -4,21 +4,15 @@ import 'package:my_diabetes/src/models/models.dart';
 class FirestoreProvider {
   Firestore _firestore = Firestore.instance;
 
-  Future<int> authenticateUser(String email, String password) async {
+  Future< List<DocumentSnapshot>> authenticateUser(String email, String password) async {
     final QuerySnapshot result = await _firestore
         .collection("users")
         .where("email", isEqualTo: email)
         .where("password", isEqualTo: password)
         .getDocuments();
-    final List<DocumentSnapshot> docs = result.documents;
 
-    if (docs.length == 0) {
-      print("len 0");
-      return 0;
-    } else {
-      print("len 1");
-      return 1;
-    }
+    return result.documents;
+
   }
 
   Future<void> registerUser(String firstName, String lastName,String phone,String email, String password) async {
@@ -53,13 +47,45 @@ class FirestoreProvider {
     return articles;
   }
 
-  Future<List<DoctorModel>> getAllDoctors() async {
+  Future<List<FoodModel>> getAllFood() async {
+    final QuerySnapshot result = await _firestore
+        .collection("foods")
+        .getDocuments();
+    final List<FoodModel>  foods  = [];
+
+    result.documents.forEach((element) {
+      FoodModel articleModel = FoodModel(
+            element.data.containsKey("name") ? element["name"] : "",
+            element.data.containsKey("icon") ? element["icon"] : "",
+            element.data.containsKey("sugar") ? element["sugar"] : "",
+      );
+
+      foods.add(articleModel);
+    });
+
+    return foods;
+  }
+
+  Future<List<DoctorModel>> getAllDoctors(String type) async {
     final QuerySnapshot result = await _firestore
         .collection("doctors")
+        .where("type", isEqualTo: type)
         .getDocuments();
     final List<DoctorModel>  doctors  = [];
 
+    print(result.documents.length);
+
     result.documents.forEach((element) {
+      print(element.documentID);
+      print((element.data.containsKey("hospitals") ? element["hospitals"] : [""]).runtimeType);
+
+      List<dynamic> hospitalData = (element.data.containsKey("hospitals") ? element["hospitals"] : [""]);
+      List<String> hospitals = [];
+
+      hospitalData.forEach((element) {
+          hospitals.add(element.toString());
+      });
+
         DoctorModel doctorModel = DoctorModel(
             element.documentID,
             element.data.containsKey("name") ? element["name"] : "",
@@ -71,7 +97,7 @@ class FirestoreProvider {
             element.data.containsKey("type") ? element["type"] : "",
             element.data.containsKey("chargePerChannel") ? element["chargePerChannel"] : "",
             element.data.containsKey("image") ? element["image"] : "",
-            element.data.containsKey("hospitals") ? element["hospitals"] : "");
+            hospitals);
 
         doctors.add(doctorModel);
     });
@@ -80,6 +106,7 @@ class FirestoreProvider {
   }
 
   Future<List<HospitalModel>> getHospitalsByIds(List<String> ids) async {
+
     final QuerySnapshot result = await _firestore
         .collection("doctors")
         .where("country", arrayContainsAny: ids)
