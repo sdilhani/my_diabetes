@@ -19,6 +19,7 @@ class FoodModel{
 }
 
 class HospitalModel{
+  final String id;
   final String name;
   final String logo;
   final String address;
@@ -28,7 +29,7 @@ class HospitalModel{
   final String serviceCharge;
 
   HospitalModel(this.name, this.logo, this.address, this.email, this.phone,
-      this.taxPercentage, this.serviceCharge);
+      this.taxPercentage, this.serviceCharge, this.id);
 }
 
 class DoctorModel extends UserModel{
@@ -36,8 +37,10 @@ class DoctorModel extends UserModel{
   final String designation;
   final String type;
   final String chargePerChannel;
+  final String image;
+  final List<String> hospitals;
 
-  DoctorModel(String uid, String firstName, String lastName, String password, String email, String phone, this.designation, this.type, this.chargePerChannel) : super(uid, firstName, lastName, password, email, phone);
+  DoctorModel(String uid, String firstName, String lastName, String password, String email, String phone, this.designation, this.type, this.chargePerChannel, this.image, this.hospitals) : super(uid, firstName, lastName, password, email, phone);
 
 }
 

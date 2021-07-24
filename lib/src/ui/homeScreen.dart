@@ -52,22 +52,22 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: new Icon(Icons.menu_book_sharp),
               backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
-            label: 'Home'
+            label: 'Articles'
           ),
           BottomNavigationBarItem(
             backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
             icon: new Icon(Icons.person_outline),
-            label: 'Messages',
+            label: 'Doctors',
           ),
           BottomNavigationBarItem(
               backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
               icon: Icon(Icons.food_bank_outlined),
-              label: 'Profile'
+              label: 'Food'
           ),
           BottomNavigationBarItem(
               backgroundColor: Color.fromRGBO(95, 183, 148, 0.9),
               icon: Icon(Icons.settings),
-              label: 'Profile'
+              label: 'Settings'
           )
         ],
       ),

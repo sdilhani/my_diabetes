@@ -68,6 +68,7 @@ class _ArticlesListState extends State<ArticlesListScreen> {
                                     "/": (_) => new WebviewScaffold(
                                           url: item.url,
                                           appBar: new AppBar(
+                                            backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
                                             title: new Text("Widget webview"),
                                           ),
                                         ),

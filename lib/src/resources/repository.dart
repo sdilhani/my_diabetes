@@ -16,4 +16,7 @@ class Repository {
   Stream<List<ArticleModel>> getAllArticles() =>
       Stream.fromFuture(_firestoreProvider.getAllArticles());
 
+  Stream<List<DoctorModel>> getAllDoctors() =>
+      Stream.fromFuture(_firestoreProvider.getAllDoctors());
+
 }
