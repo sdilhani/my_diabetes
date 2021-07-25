@@ -4,6 +4,8 @@ import 'package:my_diabetes/src/blocs/doctor_bloc.dart';
 import 'package:my_diabetes/src/blocs/doctor_bloc_provider.dart';
 import 'package:my_diabetes/src/models/models.dart';
 
+import '../doctor_detail_page.dart';
+
 class ConsultantListScreen extends StatefulWidget {
   ConsultantListScreen();
 
@@ -61,49 +63,80 @@ class _ConsultantListState extends State<ConsultantListScreen> {
               child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () => {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (_) => new MaterialApp(
-                        //           routes: {
-                        //             "/": (_) => new WebviewScaffold(
-                        //                   url: item.url,
-                        //                   appBar: new AppBar(
-                        //                     backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
-                        //                     title: new Text("Widget webview"),
-                        //                   ),
-                        //                 ),
-                        //           },
-                        //         )))
-                      },
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => DoctorDetailScreen(item)))
+                  },
                   child: SizedBox(
-                      height: 184.0,
+                      height: 134.0,
                       child: Card(
                           color: Colors.white,
                           elevation: 5,
-                          child: new Stack(fit: StackFit.expand, children: <
-                              Widget>[
-                            new Container(
-                                height: 150,
-                                child: new Image.network(
-                                  item.image,
-                                  fit: BoxFit.cover,
-                                  colorBlendMode: BlendMode.lighten,
-                                  color: Colors.black87,
-                                )),
-                            Positioned(
-                                bottom: 0.0,
-                                right: 0.0,
-                                left: 0.0,
-                                child: Container(
-                                    color: Color.fromRGBO(95, 183, 148, 0.9),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Text(
-                                          item.firstName,
-                                          style: new TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ))))
-                          ])))));
+                          child: new Container(
+                            height: 100,
+                            child: Row(children: [
+                              Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: new Image.network(
+                                    item.image,
+                                    fit: BoxFit.cover,
+                                    height: 100,
+                                    width: 100,
+                                    colorBlendMode: BlendMode.lighten,
+                                    color: Colors.black87,
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 16, 4, 16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.firstName,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, ),
+                                      ),
+                                      Container(height: 6,),
+                                      Text(
+                                        item.designation,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Icon(Icons.alternate_email_rounded,
+                                                  size: 16,
+                                                  color: Color.fromRGBO(172, 8, 8, 0.9)),
+                                              Container(
+                                                margin: EdgeInsets.all(4),
+                                              ),
+                                              Text(item.email,
+                                                  style:
+                                                  TextStyle(color: Colors.black, fontSize: 16)),
+                                            ],
+                                          )),
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Icon(Icons.phone_android,
+                                                  size: 16,
+                                                  color: Color.fromRGBO(172, 8, 8, 0.9)),
+                                              Container(
+                                                margin: EdgeInsets.all(4),
+                                              ),
+                                              Text(item.phone,
+                                                  style:
+                                                  TextStyle(color: Colors.black, fontSize: 16)),
+                                            ],
+                                          ))
+                                    ],
+                                  )),
+                            ]),
+                          )))));
         });
   }
 }

@@ -77,35 +77,43 @@ class _FoodListState extends State<FoodListScreen> {
                         //         )))
                       },
                   child: SizedBox(
-                      height: 184.0,
+                      height: 134.0,
                       child: Card(
                           color: Colors.white,
                           elevation: 5,
-                          child: new Stack(fit: StackFit.expand, children: <
-                              Widget>[
-                            new Container(
-                                height: 150,
-                                child: new Image.network(
-                                  item.icon,
-                                  fit: BoxFit.cover,
-                                  colorBlendMode: BlendMode.lighten,
-                                  color: Colors.black87,
-                                )),
-                            Positioned(
-                                bottom: 0.0,
-                                right: 0.0,
-                                left: 0.0,
-                                child: Container(
-                                    color: Color.fromRGBO(95, 183, 148, 0.9),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Text(
-                                          item.name,
-                                          style: new TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ))))
-                          ])))));
+                          child: new Container(
+                            height: 100,
+                            child: Row(children: [
+                              Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: new Image.network(
+                                    item.icon,
+                                    fit: BoxFit.cover,
+                                    height: 100,
+                                    width: 100,
+                                    colorBlendMode: BlendMode.lighten,
+                                    color: Colors.black87,
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 16, 4, 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        item.name,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, ),
+                                      ),
+                                      Container(width: 16),
+                                      Text(
+                                        item.sugarContent,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 16),
+                                      )
+                                    ],
+                                  )),
+                            ]),
+                          )))));
         });
   }
 }

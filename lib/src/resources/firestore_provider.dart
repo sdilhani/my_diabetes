@@ -124,10 +124,13 @@ class FirestoreProvider {
   Future<List<HospitalModel>> getHospitalsByIds(List<String> ids) async {
 
     final QuerySnapshot result = await _firestore
-        .collection("doctors")
-        .where("country", arrayContainsAny: ids)
+        .collection("hospitals")
+        .where("id", whereIn: ids)
         .getDocuments();
     final List<HospitalModel>  hospitals  = [];
+
+    int len = result.documents.length;
+    print("Res count $len");
 
     result.documents.forEach((element) {
         HospitalModel hospitalModel = HospitalModel(

@@ -6,18 +6,9 @@ import 'package:rxdart/rxdart.dart';
 
 class HospitalBloc {
   final _repository = Repository();
-  final _isLoading = BehaviorSubject<bool>();
-
-  Observable<bool> get loadingStatus => _isLoading.stream;
-
-  Function(bool) get showProgressBar => _isLoading.sink.add;
 
   Stream<List<HospitalModel>> getHospitalsByIds(List<String> ids) {
+    print(" ids $ids.length");
      return _repository.getHospitalsByIds(ids);
-  }
-
-  void dispose() async {
-    await _isLoading.drain();
-    _isLoading.close();
   }
 }
