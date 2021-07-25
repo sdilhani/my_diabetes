@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:my_diabetes/src/blocs/article_bloc_provider.dart';
 import 'package:my_diabetes/src/blocs/doctor_bloc_provider.dart';
 import 'package:my_diabetes/src/blocs/food_bloc_provider.dart';
+import 'package:my_diabetes/src/blocs/settings_bloc_provider.dart';
 import 'package:my_diabetes/src/ui/widget/articles_list.dart';
 import 'package:my_diabetes/src/ui/widget/consultant_list.dart';
 import 'package:my_diabetes/src/ui/widget/doctor_list.dart';
 import 'package:my_diabetes/src/ui/widget/doctor_main_screen.dart';
 import 'package:my_diabetes/src/ui/widget/food_list.dart';
+import 'package:my_diabetes/src/ui/widget/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -34,7 +36,7 @@ class _HomeState extends State<Home> {
       ArticleBlocProvider( child: ArticlesListScreen()),
       DoctorScreen(),
       FoodBlocProvider( child: FoodListScreen()),
-      PlaceholderWidget(Colors.yellow)
+      SettingsBlocProvider(child: SettingsScreen())
     ];
 
     final List<String> _titles = [

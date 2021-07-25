@@ -25,8 +25,18 @@ class Repository {
       await setLoggedInUserEmail(email);
       await setLoggedInUserPassword(password);
       await setLoggedInUserImage(image);
+      await setLoggedIn(true);
       return 1;
     }
+  }
+
+  Future<void> logoutUser() async {
+      await setUserName("N/A", "N/A");
+      await setLoggedInUserEmail("N/A");
+      await setLoggedInUserPassword("N/A");
+      await setLoggedInUserImage("N/A");
+      await setLoggedIn(false);
+      return;
   }
 
   Future<void> registerUser(String firstName, String lastName, String phone,

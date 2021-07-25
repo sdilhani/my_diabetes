@@ -7,16 +7,14 @@ import 'package:my_diabetes/src/ui/widget/default_text_field.dart';
 import 'forgot_password_dialog.dart';
 import 'logout_dialog.dart';
 
-class ForgotPasswordForm extends StatefulWidget {
+class ResetPasswordForm extends StatefulWidget {
   @override
-  ForgotPasswordFormState createState() {
-    return ForgotPasswordFormState();
+  ResetPasswordFormState createState() {
+    return ResetPasswordFormState();
   }
 }
 
-class ForgotPasswordFormState extends State<ForgotPasswordForm> {
-
-  String email = "";
+class ResetPasswordFormState extends State<ResetPasswordForm> {
 
   @override
   void didChangeDependencies() {
