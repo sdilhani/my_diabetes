@@ -15,6 +15,22 @@ class FirestoreProvider {
 
   }
 
+  Future< List<DocumentSnapshot>> getUserByEmail(String email) async {
+    final QuerySnapshot result = await _firestore
+        .collection("users")
+        .where("email", isEqualTo: email)
+        .getDocuments();
+
+    return result.documents;
+  }
+
+  Future<void> updatePassword(String id, String password) async {
+    await _firestore
+        .collection("users").document(id).updateData({'password': password});
+
+    return;
+  }
+
   Future<void> registerUser(String firstName, String lastName,String phone,String email, String password) async {
     return _firestore
         .collection("users")

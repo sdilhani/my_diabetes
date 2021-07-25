@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diabetes/src/blocs/logout_bloc_provider.dart';
+import 'package:my_diabetes/src/blocs/reset_password_bloc_provider.dart';
 import 'package:my_diabetes/src/blocs/settings_bloc.dart';
 import 'package:my_diabetes/src/blocs/settings_bloc_provider.dart';
 import 'package:my_diabetes/src/ui/about_us.dart';
 import 'package:my_diabetes/src/ui/help.dart';
+import 'package:my_diabetes/src/ui/reset_password.dart';
 import 'package:my_diabetes/src/ui/widget/logout_dialog.dart';
+
+import '../forgot_password.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -85,7 +89,9 @@ class SettingScreenState extends State<SettingsScreen> {
                                                   fontSize: 18)),
                                         ],
                                       )),
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (_) => ResetPasswordBlocProvider(child: ResetPasswordScreen()))),
                                 ),
                                 height: 80),
 

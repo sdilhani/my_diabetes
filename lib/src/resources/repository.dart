@@ -30,6 +30,22 @@ class Repository {
     }
   }
 
+  Future<UserModel> getUserByEmail(String email) async {
+    final List<DocumentSnapshot> docs = await _firestoreProvider.getUserByEmail(email);
+
+    if (docs.length == 0) {
+      return null;
+    } else {
+      String firstName = docs[0].data.containsKey("firstName") ? docs[0].data["firstName"] : "N/A";
+      String lastName = docs[0].data.containsKey("lastName") ? docs[0].data["lastName"] : "N/A";
+      String password = docs[0].data.containsKey("password") ? docs[0].data["password"] : "N/A";
+      String email = docs[0].data.containsKey("email") ? docs[0].data["email"] : "N/A";
+      String phone = docs[0].data.containsKey("phone") ? docs[0].data["phone"] : "N/A";
+
+      return UserModel(docs[0].documentID, firstName, lastName, password, email, phone);
+    }
+  }
+
   Future<void> logoutUser() async {
       await setUserName("N/A", "N/A");
       await setLoggedInUserEmail("N/A");
@@ -43,6 +59,9 @@ class Repository {
       String email, String password) =>
       _firestoreProvider.registerUser(
           firstName, lastName, phone, email, password);
+
+  Future<void> updatePassword(String docId, String password) =>
+      _firestoreProvider.updatePassword( docId, password);
 
   Stream<List<ArticleModel>> getAllArticles() =>
       Stream.fromFuture(_firestoreProvider.getAllArticles());
