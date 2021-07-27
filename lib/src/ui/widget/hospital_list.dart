@@ -5,22 +5,26 @@ import 'package:my_diabetes/src/blocs/hospital_bloc.dart';
 import 'package:my_diabetes/src/blocs/hospital_bloc_provider.dart';
 import 'package:my_diabetes/src/models/models.dart';
 
+import '../appointment_detail_page.dart';
+
 class HospitalListScreen extends StatefulWidget {
   final List<String> hospitals;
+  final DoctorModel doctorModel;
 
-  HospitalListScreen(this.hospitals);
+  HospitalListScreen(this.hospitals, this.doctorModel);
 
   @override
   _HospitalListState createState() {
-    return _HospitalListState(hospitals);
+    return _HospitalListState(hospitals, doctorModel);
   }
 }
 
 class _HospitalListState extends State<HospitalListScreen> {
   HospitalBloc _bloc;
   final List<String> hospitals;
+  final DoctorModel doctorModel;
 
-  _HospitalListState(this.hospitals);
+  _HospitalListState(this.hospitals, this.doctorModel );
 
   @override
   void didChangeDependencies() {
@@ -55,32 +59,23 @@ class _HospitalListState extends State<HospitalListScreen> {
     );
   }
 
-  ListView buildList(List<HospitalModel> articles) {
+  ListView buildList(List<HospitalModel> hospitals) {
     return ListView.separated(
         separatorBuilder: (BuildContext context, int index) => Divider(),
-        itemCount: articles.length,
+        itemCount: hospitals.length,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          final item = articles[index];
+          final item = hospitals[index];
           return Padding(
               padding: const EdgeInsets.all(6.0),
               child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () => {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (_) => new MaterialApp(
-                        //           routes: {
-                        //             "/": (_) => new WebviewScaffold(
-                        //                   url: item.url,
-                        //                   appBar: new AppBar(
-                        //                     backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
-                        //                     title: new Text("Widget webview"),
-                        //                   ),
-                        //                 ),
-                        //           },
-                        //         )))
-                      },
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => AppointmentDetailPage(hospitalModel: item, doctorModel: doctorModel,)))
+                  },
                   child: SizedBox(
                       height: 150.0,
                       child: Card(

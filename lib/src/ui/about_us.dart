@@ -38,11 +38,11 @@ class AboutUs extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 14)),
                   ),Padding(
                     padding: EdgeInsets.fromLTRB(32,16,32,0),
-                    child: Text("Developer Name : ",
+                    child: Text("Developer Name : S.A.S. Dilhani",
                         style: TextStyle(color: Colors.black, fontSize: 14)),
                   ),Padding(
                     padding: EdgeInsets.fromLTRB(32,16,32,0),
-                    child: Text("Student ID :",
+                    child: Text("Student ID : K1946739",
                         style: TextStyle(color: Colors.black, fontSize: 14)),
                   ),Padding(
                     padding: EdgeInsets.fromLTRB(32,16,32,0),
@@ -54,7 +54,7 @@ class AboutUs extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 14)),
                   ),Padding(
                     padding: EdgeInsets.fromLTRB(32,16,32,0),
-                    child: Text("Date : <Submit Date>",
+                    child: Text("Date : 29/07/2021",
                         style: TextStyle(color: Colors.black, fontSize: 14)),
                   )
                 ])));
