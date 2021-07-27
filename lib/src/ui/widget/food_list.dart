@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:my_diabetes/src/blocs/doctor_bloc.dart';
-import 'package:my_diabetes/src/blocs/doctor_bloc_provider.dart';
+import 'package:flutter/widgets.dart';
 import 'package:my_diabetes/src/blocs/food_bloc.dart';
 import 'package:my_diabetes/src/blocs/food_bloc_provider.dart';
 import 'package:my_diabetes/src/models/models.dart';
@@ -33,26 +33,52 @@ class _FoodListState extends State<FoodListScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment(0.0, 0.0),
-      child: StreamBuilder(
-          stream: _bloc.getAllFood(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<FoodModel>> foods) {
-            if (foods.hasData) {
-              List<FoodModel> foodData = foods.data;
-              if (foodData.isNotEmpty) {
-                return buildList(foodData);
-              } else {
-                return Text("No Articles Found");
-              }
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
-    );
+        alignment: Alignment(0.0, 0.0),
+        child: Column(children: [
+          SizedBox( height: 50 , width: double.maxFinite, child:
+          StreamBuilder(
+              stream: _bloc.sugars,
+              builder:
+                  (BuildContext context, AsyncSnapshot<double> calories) {
+                if (calories.hasData) {
+                  double calory = calories.data;
+                  return Container( child:
+                      Text(" Total Sugar " + calory.toStringAsFixed(2) + "g",
+                        textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18),),
+                    height: 50,
+                    alignment: AlignmentDirectional.center,
+                    color: Theme.of(context).accentColor,
+                  );
+                } else {
+                  return Container( child:
+                  Text("Select a food to calculate sugar",
+                    textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18),),
+                    height: 50,
+                    alignment: AlignmentDirectional.center,
+                    color: Theme.of(context).accentColor,
+                  );
+                }
+              })),
+          Expanded(child: StreamBuilder(
+              stream: _bloc.getAllFood(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<FoodModel>> foods) {
+                if (foods.hasData) {
+                  List<FoodModel> foodData = foods.data;
+                  if (foodData.isNotEmpty) {
+                    return buildList(foodData);
+                  } else {
+                    return Text("No Food Found");
+                  }
+                } else {
+                  return Padding(padding: EdgeInsets.all(20), child: Text("Fetching Food"));
+                }
+              }),
+          )]));
   }
 
   ListView buildList(List<FoodModel> articles) {
+    List<FoodModel> selectedFoods = [];
     return ListView.separated(
         separatorBuilder: (BuildContext context, int index) => Divider(),
         itemCount: articles.length,
@@ -63,18 +89,12 @@ class _FoodListState extends State<FoodListScreen> {
               child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () => {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (_) => new MaterialApp(
-                        //           routes: {
-                        //             "/": (_) => new WebviewScaffold(
-                        //                   url: item.url,
-                        //                   appBar: new AppBar(
-                        //                     backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
-                        //                     title: new Text("Widget webview"),
-                        //                   ),
-                        //                 ),
-                        //           },
-                        //         )))
+                        if(selectedFoods.contains(item)){
+                          selectedFoods.remove(item)
+                        } else {
+                          selectedFoods.add(item)
+                        },
+                        _bloc.changeSelectedFood(selectedFoods)
                       },
                   child: SizedBox(
                       height: 134.0,
@@ -102,11 +122,14 @@ class _FoodListState extends State<FoodListScreen> {
                                       Text(
                                         item.name,
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, ),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Container(width: 16),
                                       Text(
-                                        item.sugarContent,
+                                        item.sugarContent + "g",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(fontSize: 16),
                                       )

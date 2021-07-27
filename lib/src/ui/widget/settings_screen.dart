@@ -201,7 +201,8 @@ class SettingScreenState extends State<SettingsScreen> {
                   fit: BoxFit.cover, height: 100, width: 100);
             }
           } else {
-            return CircularProgressIndicator();
+            return Image.asset("assets/images/avatar.png",
+                fit: BoxFit.cover, height: 100, width: 100);
           }
         });
   }

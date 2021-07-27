@@ -15,8 +15,6 @@ class LoginBloc {
 
   Observable<bool> get signInStatus => _isSignedIn.stream;
 
-//  String get emailAddress => _email.value;
-
   // Change data
   Function(String) get changeEmail => _email.sink.add;
 
@@ -69,5 +67,9 @@ class LoginBloc {
     } else {
       return "";
     }
+  }
+
+  Future<bool> isLoggedIn(){
+    return _repository.isLoggedIn();
   }
 }

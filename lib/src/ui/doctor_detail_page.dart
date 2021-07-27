@@ -95,7 +95,7 @@ class DoctorDetailScreen extends StatelessWidget {
                 ),
 
             HospitalBlocProvider(
-                        child: HospitalListScreen(doctorModel.hospitals))
+                        child: HospitalListScreen(doctorModel.hospitals, doctorModel))
 
             ])));
   }

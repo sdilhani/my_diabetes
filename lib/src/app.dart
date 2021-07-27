@@ -12,8 +12,8 @@ class App extends StatelessWidget {
         child: RegisterBlocProvider(
         child: MaterialApp(
           theme: ThemeData(
-            accentColor: Colors.black,
-            primaryColor: Colors.amber,
+            accentColor: Color.fromRGBO(172, 8, 8, 1),
+            primaryColor: Color.fromRGBO(95, 183, 148, 1),
           ),
           home:
             SplashScreen()

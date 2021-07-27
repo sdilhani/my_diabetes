@@ -21,7 +21,7 @@ class DefaultButton extends StatelessWidget {
 
   final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
     primary: Colors.white,
-    backgroundColor: Color.fromRGBO( 95, 183, 1, 1),
+    backgroundColor: Color.fromRGBO( 95, 183, 148, 0.9),
     minimumSize: Size(280, 47),
     textStyle: TextStyle(color: Colors.white),
     padding: EdgeInsets.symmetric(horizontal: 0),
