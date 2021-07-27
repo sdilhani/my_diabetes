@@ -69,7 +69,7 @@ class _ArticlesListState extends State<ArticlesListScreen> {
                                           url: item.url,
                                           appBar: new AppBar(
                                             backgroundColor: Color.fromRGBO(172, 8, 8, 0.9),
-                                            title: new Text("Widget webview"),
+                                            title: new Text("My Diabetes"),
                                           ),
                                         ),
                                   },
